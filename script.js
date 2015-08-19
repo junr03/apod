@@ -39,21 +39,26 @@ function expandPhoto() {
     para.appendChild(title);
     overlaydiv.appendChild(para);
 
+    // create nav div
+    var nav = document.createElement("div");
+    nav.setAttribute("class", "nav");
+    overlaydiv.appendChild(nav);
+
     // if there is a previous photo, create a previous arrow
     if (currentIMG.previousSibling  instanceof HTMLImageElement) {
         var prev = document.createElement("a");
         prev.setAttribute("onclick","previousPhoto()");
         var textPrev = document.createTextNode("<");
         prev.appendChild(textPrev);
-        overlaydiv.appendChild(prev);
+        nav.appendChild(prev);
     };
 
     // create a back to gallery button
     var gallery = document.createElement("a");
     gallery.setAttribute("onclick","restore()");
-    var textGallery = document.createTextNode("Gallery");
+    var textGallery = document.createTextNode("Back to Gallery");
     gallery.appendChild(textGallery);
-    overlaydiv.appendChild(gallery);
+    nav.appendChild(gallery);
 
     // if there is a next photo, create a next arrow
     if (currentIMG.nextSibling  instanceof HTMLImageElement) {
@@ -61,7 +66,7 @@ function expandPhoto() {
         frwd.setAttribute("onclick","nextPhoto()");
         var textFrwd = document.createTextNode(">");
         frwd.appendChild(textFrwd);
-        overlaydiv.appendChild(frwd);
+        nav.appendChild(frwd);
     };
 
     // create description div, and description

@@ -1,3 +1,42 @@
+function expandPhoto() {
+    // keep a global variable of current img expanded
+    currentIMG = this;
+
+    // create the overlay div
+    var overlay = document.createElement("div");
+    overlay.setAttribute("id","overlay");
+    overlay.setAttribute("class", "overlay");
+    document.body.appendChild(overlay);
+
+    // create the div to hold the picture, and title
+    var overlaydiv = document.createElement("div");
+    overlaydiv.setAttribute("class", "overlaydiv");
+    overlay.appendChild(overlaydiv);
+
+    // create the image
+    var img = document.createElement("img");
+    img.setAttribute("id","img");
+    img.src = currentIMG.getAttribute("src");
+    img.setAttribute("class","overlayimg");
+    overlaydiv.appendChild(img);
+
+    // create title
+    var para = document.createElement("h3");
+    var title = document.createTextNode(currentIMG.getAttribute("title"));
+    para.appendChild(title);
+    overlaydiv.appendChild(para);
+
+    // create description div, and description
+    var overlaydesc = document.createElement("div");
+    overlaydesc.setAttribute("class", "overlaydesc");
+    overlay.appendChild(overlaydesc);
+
+    var desc = document.createElement("blockquote");
+    var description = document.createTextNode(currentIMG.getAttribute("alt"));
+    desc.appendChild(description);
+    overlaydesc.appendChild(desc);
+}
+
 window.onload=function() {
     var gallery = document.getElementById("gallery");
     var xhr = new XMLHttpRequest();
@@ -22,4 +61,9 @@ window.onload=function() {
         // move one day into the past
         date.setDate(date.getDate()-1);
     };
+
+    var imgs = document.getElementsByTagName("img");
+    for (var i = 0; i < imgs.length; i++) {
+        imgs[i].onclick=expandPhoto;
+    }
 }

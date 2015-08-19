@@ -1,3 +1,17 @@
+function restore() {
+    document.body.removeChild(document.getElementById("overlay"));
+}
+
+function previousPhoto() {
+    restore();
+    expandPhoto.call(currentIMG.previousSibling);
+}
+
+function nextPhoto() {
+    restore();
+    expandPhoto.call(currentIMG.nextSibling);
+}
+
 function expandPhoto() {
     // keep a global variable of current img expanded
     currentIMG = this;
@@ -20,11 +34,35 @@ function expandPhoto() {
     img.setAttribute("class","overlayimg");
     overlaydiv.appendChild(img);
 
-    // create title
     var para = document.createElement("h3");
     var title = document.createTextNode(currentIMG.getAttribute("title"));
     para.appendChild(title);
     overlaydiv.appendChild(para);
+
+    // if there is a previous photo, create a previous arrow
+    if (currentIMG.previousSibling  instanceof HTMLImageElement) {
+        var prev = document.createElement("a");
+        prev.setAttribute("onclick","previousPhoto()");
+        var textPrev = document.createTextNode("<");
+        prev.appendChild(textPrev);
+        overlaydiv.appendChild(prev);
+    };
+
+    // create a back to gallery button
+    var gallery = document.createElement("a");
+    gallery.setAttribute("onclick","restore()");
+    var textGallery = document.createTextNode("Gallery");
+    gallery.appendChild(textGallery);
+    overlaydiv.appendChild(gallery);
+
+    // if there is a next photo, create a next arrow
+    if (currentIMG.nextSibling  instanceof HTMLImageElement) {
+        var frwd = document.createElement("a");
+        frwd.setAttribute("onclick","nextPhoto()");
+        var textFrwd = document.createTextNode(">");
+        frwd.appendChild(textFrwd);
+        overlaydiv.appendChild(frwd);
+    };
 
     // create description div, and description
     var overlaydesc = document.createElement("div");
